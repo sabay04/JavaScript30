@@ -59,6 +59,36 @@
 
 <script>
 
+
+  function playSound(event){
+    
+      const audio = document.querySelector(`audio[data-key="${event.keyCode}"]`)
+      const key = document.querySelector(`.key[data-key="${event.keyCode}"]`)
+
+      if(!audio) {
+        return
+      }; // stops function from running all together
+
+      audio.currentTime = 0;
+      audio.play();
+      key.classList.add('playing') // add a class of playing
+  }
+
+  function removeTransition(event) {
+    if(event.propertyName !== 'transform') {
+      return
+    };
+    // skip it if its not a transform
+    //
+     this.classList.remove('playing') // remove a class of playing for the key that is playing
+
+  }
+
+  const keys = document.querySelectorAll(`.key`)
+  // listening for the end of an event
+  keys.forEach(key => key.addEventListener('transitionend', removeTransition))
+
+  window.addEventListener('keydown', playSound)
 </script>
 
 
